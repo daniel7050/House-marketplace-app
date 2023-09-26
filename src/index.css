@@ -218,9 +218,16 @@ button {
   text-align: right;
 }
 
-.signInBar,
-.signUpBar {
+.signInBar {
   margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: inherit;
+}
+
+.signUpBar {
+  margin-top: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
