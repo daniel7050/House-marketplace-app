@@ -4,6 +4,7 @@ import {toast} from 'react-toastify'
 import {getAuth,createUserWithEmailAndPassword, updateProfile} from 'firebase/auth'
 import { setDoc, doc, serverTimestamp} from 'firebase/firestore'
 import { db } from '../firebase.config'
+import OAuth from "../components/OAuth"
 import { KeyboardArrowRightIcon} from '../assets/icons/keyboardArrowRightIcon'
 import visibilityIcon from '../assets/svg/visibilityIcon.svg'
 
@@ -91,6 +92,8 @@ function SignUp() {
                         onClick={() => setShowPassword((prevState) => !prevState)}
                     />
                 </div>
+
+                <OAuth/>
 
                 <Link to='/forgot-password' className="forgotPasswordLink">
                     Forgot Password
