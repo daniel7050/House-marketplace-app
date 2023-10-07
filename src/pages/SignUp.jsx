@@ -93,7 +93,6 @@ function SignUp() {
                     />
                 </div>
 
-                <OAuth/>
 
                 <Link to='/forgot-password' className="forgotPasswordLink">
                     Forgot Password
@@ -109,7 +108,9 @@ function SignUp() {
                 </div>
                 </form>
 
-                <Link to='/sign-in' className="registerLink" style={{marginTop: '-10px'}}>
+                <OAuth/>
+
+                <Link to='/sign-in' className="registerLink">
                     Sign In Instead
                 </Link>
             </div>
