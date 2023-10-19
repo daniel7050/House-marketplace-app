@@ -3,7 +3,7 @@ import deleteIcon from "../assets/svg/deleteIcon.svg";
 import bedIcon from "../assets/svg/bedIcon.svg";
 import bathhubIcon from "../assets/svg/bathtubIcon.svg";
 
-function ListingItem({ listing, id }) {
+function ListingItem({ listing, id, onDelete }) {
   return (
     <li className="categoryListing">
       <Link
@@ -39,9 +39,23 @@ function ListingItem({ listing, id }) {
                 ? `${listing.bedrooms} Bedrooms`
                 : "1 Bedroom"}
             </p>
+            <img src={bathhubIcon} alt="bath" />
+            <p className="categoryListingInfoText">
+              {listing.bathrooms > 1
+                ? `${listing.bathrooms} Bathrooms`
+                : "1 Bathroom"}
+            </p>
           </div>
         </div>
       </Link>
+
+      {onDelete && (
+        <deleteIcon
+          className="removeIcon"
+          fill="rgb(231, 76, 60)"
+          onClick={() => onDelete(listing.id, listing.name)}
+        />
+      )}
     </li>
   );
 }
