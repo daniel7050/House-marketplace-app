@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 
 function CreateListing() {
-  const [geolocationEnabled, setGeolocationEnabled] = useState(true);
+  const [geolocationEnabled, setGeolocationEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     type: "rent",
@@ -45,7 +45,7 @@ function CreateListing() {
 
   useEffect(() => {
     if (isMounted) {
-      onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, user => {
         if (user) {
           setFormData({ ...formData, useRef: user.uid });
         } else {
@@ -60,16 +60,18 @@ function CreateListing() {
   }, [isMounted]);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((res) => {
-      setFormData((prev) => ({
+    navigator.geolocation.getCurrentPosition(res => {
+      setFormData(prev => ({
         ...prev,
         latitude: res.coords.latitude,
         longitude: res.coords.longitude,
       }));
+
+      setGeolocationEnabled(true);
     });
   }, []);
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
 
     setLoading(true);
@@ -80,14 +82,14 @@ function CreateListing() {
       return;
     }
 
-    if (images.length > 6) {
+    if (image.length > 6) {
       setLoading(false);
       toast.error("max 6 images");
       return;
     }
   };
 
-  const onMutate = (e) => {
+  const onMutate = e => {
     let boolean = null;
 
     if (e.target.value === "true") {
@@ -99,14 +101,14 @@ function CreateListing() {
     }
 
     if (e.target.files) {
-      setFormData((prevState) => ({
+      setFormData(prevState => ({
         ...prevState,
         images: e.target.files,
       }));
     }
 
     if (!e.target.files) {
-      setFormData((prevState) => ({
+      setFormData(prevState => ({
         ...prevState,
         [e.target.id]: boolean ?? e.target.value,
       }));
@@ -116,8 +118,6 @@ function CreateListing() {
   if (loading) {
     return <Spinner />;
   }
-
-  console.log(formData.latitude, formData.longitude);
 
   return (
     <div className="profile">

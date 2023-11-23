@@ -44,8 +44,8 @@ function Profile() {
     }
   };
 
-  const onChange = (e) => {
-    setFormData((prevState) => ({
+  const onChange = e => {
+    setFormData(prevState => ({
       ...prevState,
       [e.target.id]: e.target.value,
     }));
@@ -67,7 +67,7 @@ function Profile() {
             className="changePersonalDetails"
             onClick={() => {
               changeDetails && onSubmit();
-              setChangeDetails((prevState) => !prevState);
+              setChangeDetails(prevState => !prevState);
             }}
           >
             {changeDetails ? "done" : "change"}
