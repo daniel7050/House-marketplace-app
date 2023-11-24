@@ -59,18 +59,17 @@ function CreateListing() {
     };
   }, [isMounted]);
 
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition((res) => {
-  //     setFormData((prev) => ({
-  //       ...prev,
-  //       latitude: res.coords.latitude,
-  //       longitude: res.coords.longitude,
-  //     }));
-  //     setGeolocationEnabled(true);
-  //   });
-  // }, []);
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((res) => {
+      setFormData((prev) => ({
+        ...prev,
+        latitude: res.coords.latitude,
+        longitude: res.coords.longitude,
+      }));
+    });
+  }, []);
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     setLoading(true);
@@ -81,7 +80,7 @@ function CreateListing() {
       return;
     }
 
-    if (images.length > 6) {
+    if (image.length > 6) {
       setLoading(false);
       toast.error("max 6 images");
       return;
