@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 
 function CreateListing() {
-  const [geolocationEnabled, setGeolocationEnabled] = useState(true);
+  const [geolocationEnabled, setGeolocationEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     type: "rent",
@@ -18,7 +18,7 @@ function CreateListing() {
     offer: false,
     regularPrice: 0,
     discountedPrice: 0,
-    image: {},
+    images: {},
     latitude: 0,
     longitude: 0,
   });
@@ -34,7 +34,7 @@ function CreateListing() {
     offer,
     regularPrice,
     discountedPrice,
-    image,
+    images,
     latitude,
     longitude,
   } = formData;
@@ -59,17 +59,18 @@ function CreateListing() {
     };
   }, [isMounted]);
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((res) => {
-      setFormData((prev) => ({
-        ...prev,
-        latitude: res.coords.latitude,
-        longitude: res.coords.longitude,
-      }));
-    });
-  }, []);
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition((res) => {
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       latitude: res.coords.latitude,
+  //       longitude: res.coords.longitude,
+  //     }));
+  //     setGeolocationEnabled(true);
+  //   });
+  // }, []);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
@@ -85,6 +86,27 @@ function CreateListing() {
       toast.error("max 6 images");
       return;
     }
+
+    let geolocation = {};
+    let location;
+
+    if (geolocationEnabled) {
+      navigator.geolocation.getCurrentPosition((res) => {
+        setFormData((prev) => ({
+          ...prev,
+          latitude: res.coords.latitude,
+          longitude: res.coords.longitude,
+        }));
+      });
+    } else {
+      geolocation.lat = latitude;
+      geolocation.lng = longitude;
+      location = address;
+    }
+
+    console.log(formData.latitude, formData.longitude);
+
+    setLoading(false);
   };
 
   const onMutate = (e) => {
@@ -116,8 +138,6 @@ function CreateListing() {
   if (loading) {
     return <Spinner />;
   }
-
-  console.log(formData.latitude, formData.longitude);
 
   return (
     <div className="profile">
