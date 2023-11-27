@@ -66,6 +66,8 @@ function CreateListing() {
         latitude: res.coords.latitude,
         longitude: res.coords.longitude,
       }));
+
+      setGeolocationEnabled(true);
     });
   }, []);
 
@@ -80,7 +82,7 @@ function CreateListing() {
       return;
     }
 
-    if (image.length > 6) {
+    if (images.length > 6) {
       setLoading(false);
       toast.error("max 6 images");
       return;
